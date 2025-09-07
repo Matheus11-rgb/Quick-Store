@@ -1,0 +1,54 @@
+<body>
+
+    <main>
+        <header>
+            <h1> Entre na sua conta </h1>
+        </header>
+        <section>
+            <form (ngSubmit)="Entrar()">
+                <label> Email </label>
+                <div class="input-wrapper">
+                    <div class="icon-box">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mail-icon lucide-mail">
+                            <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                        </svg>
+                    </div>
+                    <input type="text" [(ngModel)]="email" name="email" placeholder="Digite seu Email"
+                        [ngClass]="{'input-error': erroEmail}">
+                </div>
+                <p *ngIf="erroEmail" class="erro-message">* Por favor, coloque um email valido </p>
+                <label> Senha </label>
+
+                <div class="input-wrapper">
+                    <div class="icon-box">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-key-round-icon lucide-key-round">
+                            <path
+                                d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                            <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <input type="password" [(ngModel)]="senha" name="senha" placeholder="Digite sua senha:"
+                        [ngClass]="{'input-error': erroSenha}">
+                </div>
+
+                <p *ngIf="erroSenha" class="erro-message">* A senha é obrigatória </p>
+                <button type="submit"> Entrar </button>
+            </form>
+        </section>
+        <footer>
+            <p> Não possui uma conta ? </p>
+            <a (click)="Cad()"> Cadastra-se </a>
+        </footer>
+        <div *ngIf="erroLog" class="erro-log">
+            <div class="modal">
+                <p> Erro ao tentar entrar, por favor tente novamente ou mais tarde ! </p>
+                <button (click)="erroLog = false"> Fechar </button>
+            </div>
+        </div>
+    </main>
+</body>

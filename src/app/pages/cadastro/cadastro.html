@@ -1,0 +1,94 @@
+<body>
+    <main>
+        <header>
+            <h1> Crie sua conta </h1>
+        </header>
+        <section>
+            <form (ngSubmit)="Cadastrar()">
+                <label> Nome </label>
+                <div class="input-wrapper">
+                    <div class="icon-box">
+                        <svg clas="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-user-pen-icon lucide-user-pen">
+                            <path d="M11.5 15H7a4 4 0 0 0-4 4v2" />
+                            <path
+                                d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+                            <circle cx="10" cy="7" r="4" />
+                        </svg>
+                    </div>
+                    <input type="text" [(ngModel)]="nome" name="nome" placeholder="Digite seu nome"
+                        [ngClass]="{'input-error': erroNome}">
+                </div>
+                <p *ngIf="erroNome" class="erro-message">* O nome é obrigatório </p>
+
+                <label> Email </label>
+                <div class="input-wrapper">
+                    <div class="icon-box">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-mail-icon lucide-mail">
+                            <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                        </svg>
+                    </div>
+                    <input type="text" [(ngModel)]="email" name="email" placeholder="exemplo@email.com"
+                        [ngClass]="{'input-error': erroEmail}">
+                </div>
+                <p *ngIf="erroEmail" class="erro-message">* Por favor, coloque um email valido </p>
+                <label> Senha </label>
+
+                <div class="input-wrapper">
+                    <div class="icon-box">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-key-round-icon lucide-key-round">
+                            <path
+                                d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                            <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <input type="password" [(ngModel)]="senha" name="senha" placeholder="Crie uma senha segura"
+                        [ngClass]="{'input-error': erroSenha}">
+                </div>
+
+                <p *ngIf="erroSenha" class="erro-message">* A senha é obrigatória </p>
+                <label> Confirme sua Senha</label>
+
+                <div class="input-wrapper">
+                    <div class="icon-box">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                            fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-key-round-icon lucide-key-round">
+                            <path
+                                d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" />
+                            <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+                        </svg>
+                    </div>
+                    <input type="password" [(ngModel)]="Csenha" name="Csenha" placeholder="Confirme sua senha"
+                        [ngClass]="{'input-error': erroConfirm}">
+                </div>
+                <p *ngIf="erroConfirm" class="erro-message">* Por favor, confirme sua senha </p>
+                <label> Função </label>
+                <select [(ngModel)]="funcao" name="funcao" required>
+                    <option value=""> Selecione uma Função </option>
+                    <option value="Vendedor">Vendedor </option>
+                    <option value="Comprador">Comprador</option>
+                </select>
+                <p *ngIf="erroFunct" class="erro-message">* Selecione uma função valida </p>
+                <button type="submit"> Cadastrar </button>
+            </form>
+
+        </section>
+        <footer>
+            <p> Já possui uma conta ? </p>
+            <a (click)="Login()"> Entrar </a>
+        </footer>
+        <div *ngIf="erroCad" class="erro-cad">
+            <div class="modal">
+                <p> Erro ao tentar cadastrar, por favor tente novamente ou mais tarde ! </p>
+                <button (click)="erroCad = false"> Fechar </button>
+            </div>
+        </div>
+    </main>
+</body>

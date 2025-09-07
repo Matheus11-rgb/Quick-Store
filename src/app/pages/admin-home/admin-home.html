@@ -1,0 +1,404 @@
+<header>
+  <nav>
+    <p> QuickStore </p>
+    <a (click)="MyProducts()">Meus Produtos
+      <span class="badge" *ngIf="Produtos.length > 0">{{ Produtos.length }}</span>
+    </a>
+    <a>Pedidos
+      <span class="badge" *ngIf="quantidadePedidos > 0">{{ quantidadePedidos }}</span>
+    </a>
+    <a (click)="AbrirModalContato()">Contato</a>
+    <a (click)="logout()"> Sair </a>
+  </nav>
+</header>
+<main>
+  <section class="CarrosseImagem">
+    <div class="carrossel-container">
+      <img [src]="imagens[imagemAtual]" class="carrossel-img" alt="Carrossel">
+    </div>
+    <div class="carrossel-indicadores">
+    </div>
+  </section>
+  <aside class="admin-produtos">
+    <h2 class="h2"> Gerencie seus produtos</h2>
+    <div class="format">
+      <article (click)="AbrirModal()">
+        <div class="card-title">
+          <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+              stroke="#348888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-circle-plus-icon lucide-circle-plus">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M8 12h8" />
+              <path d="M12 8v8" />
+            </svg>
+          </div>
+          <strong> Adicionar Produto </strong>
+        </div>
+        <div class="product-info">
+          <p> Preencha, todas as informações necessárias, como nome, descrição, preço, categoria, e imagem do produto.
+            <br>
+            com isso, todo produto adicionado será exibido na lista de produtos dos usuários.
+          </p>
+        </div>
+      </article>
+      <article (click)="AbrirModalDelete()">
+        <div class="card-title">
+          <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+              stroke="#348888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-trash-icon lucide-trash">
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+              <path d="M3 6h18" />
+              <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
+          </div>
+          <strong> Apagar Produto </strong>
+        </div>
+        <div class="product-info">
+          <p> Você pode apagar qualquer produto que não deseja mais vender, clicando no botão de apagar.
+            <br>
+            com isso, todo produto apagado não será mais exibido na lista de produtos dos usuários.
+          </p>
+        </div>
+      </article>
+      <article (click)="AbrirModalEdit()">
+        <div class="card-title">
+          <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+              stroke="#348888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-pencil-off-icon lucide-pencil-off">
+              <path
+                d="m10 10-6.157 6.162a2 2 0 0 0-.5.833l-1.322 4.36a.5.5 0 0 0 .622.624l4.358-1.323a2 2 0 0 0 .83-.5L14 13.982" />
+              <path d="m12.829 7.172 4.359-4.346a1 1 0 1 1 3.986 3.986l-4.353 4.353" />
+              <path d="m15 5 4 4" />
+              <path d="m2 2 20 20" />
+            </svg>
+          </div>
+          <strong> Editar Produto </strong>
+        </div>
+        <div class="product-info">
+          <p> Preencha, todas as informações necessárias, como nome, descrição, preço, categoria, e imagem do produto.
+            <br>
+            com isso, todo produto adicionado será exibido na lista de produtos dos usuários.
+          </p>
+        </div>
+      </article>
+    </div>
+  </aside>
+  <aside class="admin-pedidos">
+    <h2> Gerencie os Pedidos dos Usuário </h2>
+    <div class="alinhamento">
+      <table class="tabela-produtos">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Endereço</th>
+            <th>Produtos</th>
+            <th>Data/Hora</th>
+            <th> Status </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidosPendentes" class="pedido-row">
+            <td>{{ pedido.nomeUsuario }}</td>
+            <td>{{ pedido.endereco[0].rua }}, {{pedido.endereco[0].bairro}}, {{pedido.endereco[0].cep}}</td>
+            <td>
+              <ul>
+                <li *ngFor="let prod of pedido.produtos">
+                  <p style="font-weight: bolder;">{{ prod.nome }} </p> Quantidade: {{ prod.quantidade }}
+                </li>
+              </ul>
+            </td>
+            <td>{{ pedido.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="Status">
+              <ul>
+                <li>{{ pedido.status }} </li>
+                <li>
+                  <svg (click)="AbrirModalConfirm(pedido.id)" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-package-check-icon lucide-package-check">
+                    <path d="m16 16 2 2 4-4" />
+                    <path
+                      d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
+                    <path d="m7.5 4.27 9 5.15" />
+                    <polyline points="3.29 7 12 12 20.71 7" />
+                    <line x1="12" x2="12" y1="22" y2="12" />
+                  </svg>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h3> Pedidos Concluídos </h3>
+      <table class="tabela-produtos">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Endereço</th>
+            <th>Produtos</th>
+            <th>Data/Hora</th>
+            <th>Status </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidosConcluidos" class="pedido-row">
+            <td>{{ pedido.nomeUsuario }}</td>
+            <td>{{ pedido.endereco[0].rua }}, {{pedido.endereco[0].bairro}}, {{pedido.endereco[0].cep}}</td>
+            <td>
+              <ul>
+                <li *ngFor="let prod of pedido.produtos">
+                  <p style="font-weight: bolder;">{{ prod.nome }} </p> Quantidade: {{ prod.quantidade }}
+                </li>
+              </ul>
+            </td>
+            <td>{{ pedido.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="Status-concluido">
+              <ul>
+                <li> Concluído </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                    stroke="#11ff00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-check-icon lucide-check">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </aside>
+</main>
+<footer>
+  <p> <strong>QuickStore</strong> - Todos os direitos reservados</p>
+  <p> Desenvolvido por <strong> Matheus Oliveira </strong> </p>
+</footer>
+
+<div *ngIf="AddProd" class="modal-overlay">
+  <div class="modal-container">
+    <h2>Adicionar Produto</h2>
+    <div class="form-group">
+      <label for="nome">Nome do Produto</label>
+      <input type="text" [(ngModel)]="nomeProd" id="nomeProd" placeholder="Ex: Camiseta Nike Dry Fit"
+        [ngClass]="{'input-error': erroNome}">
+    </div>
+    <p *ngIf="erroNome" class="erro-message">* Por favor, coloque o nome do seu produto </p>
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <textarea [(ngModel)]="descProd" id="descProd" placeholder="Descreva os detalhes do produto..."
+        [ngClass]="{'input-error': erroDesc}"></textarea>
+    </div>
+    <p *ngIf="erroDesc" class="erro-message">* Por favor, descreva seu produto </p>
+
+    <div class="form-row">
+      <div class="form-group half">
+        <label for="valor">Preço (R$)</label>
+        <input type="number" [(ngModel)]="precoProd" id="precoProd" placeholder="Ex: 129.90"
+          [ngClass]="{'input-error': erroPreco}">
+      </div>
+      <div class="form-group half">
+        <label for="categoria">Categoria</label>
+        <select id="categoria" [(ngModel)]="categoriaProd" [ngClass]="{'input-error': erroDesc}">
+          <option value="">Selecione</option>
+          <option value="roupas">Roupas</option>
+          <option value="eletronicos">Eletrônicos</option>
+          <option value="alimentos">Alimentos</option>
+          <option value="petShop">Pet-shop</option>
+          <option value="decoracao">Decoração</option>
+        </select>
+      </div>
+    </div>
+    <p *ngIf="erroDesc" class="erro-message">* Por favor, coloque o preço do seu produto </p>
+
+    <div class="form-group">
+      <label for="whatsapp">Link do WhatsApp</label>
+      <input type="text" [(ngModel)]="telProd" id="telProd" placeholder="https://wa.me/55..."
+        [ngClass]="{'input-error': erroTel}">
+    </div>
+    <p *ngIf="erroTel" class="erro-message">* Por favor, insira um link valido ! </p>
+
+    <div class="form-group">
+      <label for="imagem">Foto do Produto</label>
+      <div class="file-upload">
+        <input type="file" (change)="onImageSelected($event)" accept="image/*">
+        <span>Selecionar Imagem</span>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button class="cancelar" (click)="FecharJanela()">Cancelar</button>
+      <button class="adicionar" (click)="AdicionarProduto()">Adicionar Produto</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="erroAdc" class="ErroAdc">
+  <div class="modalError">
+    <p> Erro ao adicionar o produto, por favor tente novamente ou mais tarde</p>
+    <button (click)="FecharErro()"> Fechar Janela </button>
+  </div>
+</div>
+
+<div *ngIf="congratulations" class="congratulations">
+  <div class="modalSucess">
+    <p> Parabéns, seu item foi adicionado </p>
+    <button (click)="FecharModal()"> Fechar Janela </button>
+  </div>
+</div>
+
+<div *ngIf="DeleteProd" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Apagar Produto </h2>
+    <div class="form-list">
+      <ul class="lista-produtos" *ngFor="let produto of Produtos" (click)="SelecionarProduto(produto.id)">
+        <li>
+          <img [src]="produto.Imagem" alt="Imagem do Produto" class="produto-imagem">
+        </li>
+        <div>
+          <li class="nome">
+            {{ produto.Nome }}
+          </li>
+          <li class="descricao">
+            {{ produto.Descricao }}
+          </li>
+          <li class="price">
+            {{ produto.Preco | currency:'BRL':'symbol':'1.2-2' }}
+          </li>
+        </div>
+      </ul>
+    </div>
+    <button (click)="FecharModalDelete()" class="cancelar"> Cancelar </button>
+  </div>
+</div>
+
+<div *ngIf="EditProd" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Editar Produto </h2>
+    <div class="form-list">
+      <ul class="lista-produtos" *ngFor="let produto of Produtos" (click)="SelecionarProdutoEdit(produto.id)">
+        <li>
+          <img [src]="produto.Imagem" alt="Imagem do Produto" class="produto-imagem">
+        </li>
+        <div>
+          <li class="nome">
+            {{ produto.Nome }}
+          </li>
+          <li class="descricao">
+            {{ produto.Descricao }}
+          </li>
+          <li class="price">
+            {{ produto.Preco | currency:'BRL':'symbol':'1.2-2' }}
+          </li>
+        </div>
+      </ul>
+    </div>
+    <button (click)="FecharModalEdit()" class="cancelar"> Cancelar </button>
+  </div>
+</div>
+
+<div *ngIf="ConfirmProd" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Confirmar Pedido </h2>
+    <p> Tem certeza que deseja confirmar este pedido ? </p>
+    <p> O produto ja foi entregue aos Correios ? Se não, por favor <strong
+        style="font-weight: bolder;">entregue-o antes de confirmar.</strong></p>
+
+    <div class="buttons">
+      <button class="cancelar" (click)="FecharModalConfirm()">Cancelar</button>
+      <button class="adicionar" (click)="ConfirmarPed(pedidoParaConfirmarId)">Confirmar Pedido</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ConfirmDelete" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Confirmar Exclusão </h2>
+    <p> Tem certeza que deseja excluir este produto ? </p>
+    <p> Esta ação não pode ser desfeita. </p>
+
+    <div class="buttons">
+      <button class="cancelar" (click)="FecharModalDeleteConfirm()">Cancelar</button>
+      <button class="adicionar" (click)="ApagarProd(produtoParaApagarId)">Confirmar Exclusão</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="ConfirmEdit" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Confirmar Edição </h2>
+    <div class="forma-list">
+      <div class="form-group">
+        <label for="nome">Nome do Produto</label>
+        <input type="text" [(ngModel)]="produtoEditando.Nome" placeholder="Nome do Produto">
+      </div>
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <textarea [(ngModel)]="produtoEditando.Descricao" placeholder="Descrição do Produto"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="imagem">Foto do Produto</label>
+        <div class="file-upload">
+          <input type="file" (change)="onImageSelected($event)" accept="image/*">
+          <span>Selecionar Imagem</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <p style="color: white;"> Tem certeza que deseja editar este produto ? </p>
+      <p style="color: white;"> Esta ação não pode ser desfeita. </p>
+    </div>
+
+    <div class="buttons">
+      <button class="cancelar" (click)="FecharModalConfirmEdit()">Cancelar</button>
+      <button class="adicionar" (click)="EditandoProd(produtoEditando)">Confirmar Edição</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="MyProds" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Meus Produtos </h2>
+    <div class="form-list">
+      <ul class="lista-produtos" *ngFor="let produto of Produtos">
+        <li>
+          <img [src]="produto.Imagem" alt="Imagem do Produto" class="produto-imagem">
+        </li>
+        <div>
+          <li class="nome">
+            {{ produto.Nome }}
+          </li>
+          <li class="descricao">
+            {{ produto.Descricao }}
+          </li>
+          <li class="price">
+            {{ produto.Preco | currency:'BRL':'symbol':'1.2-2' }}
+          </li>
+        </div>
+      </ul>
+    </div>
+    <button (click)="FecharModalProds()" class="cancelar"> Fechar </button>
+  </div>
+</div>
+
+<div *ngIf="contato" class="modal-overlay">
+  <div class="modal-container">
+    <h2> Contato </h2>
+    <form>
+      <div class="forma-list">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" [(ngModel)]="emailContato" placeholder="Email">
+        </div>
+        <div class="form-group">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagemContato" [(ngModel)]="mensagemContato" placeholder="Escreva sua mensagem aqui..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="adicionar" (click)="EnviarMensagem()"> Enviar </button>
+      <button (click)="FecharModalContato()" class="cancelar"> Fechar </button>
+    </form>
+  </div>
+</div>
