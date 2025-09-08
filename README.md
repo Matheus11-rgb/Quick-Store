@@ -33,6 +33,14 @@ Simular fluxo de compra
 ✅ Layout responsivo pronto para mobile e web
 
 🖼️ Demonstração
+![Tela Cadastro] (./public/Cadastros Erros.jpg)
+![Tela LOgin] (./public/Login.jpg)
+!{Tela Admin} (./public/Admin.jpg)
+![Tela Admin Pedidos] (./public/Admin Ped.jpg)
+!{Tela User} (./public/TelaUser.jpg)
+![Tela User Produtos] (./public/TelaUserProd.jpg)
+
+
 
 📌 Melhorias Futuras
 
